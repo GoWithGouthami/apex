@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Styling & JavaScript</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    header {
+      background: teal;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    section {
+      margin: 2rem auto;
+      padding: 1rem;
+      max-width: 800px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .carousel {
+      position: relative;
+      text-align: center;
+    }
+
+    .carousel img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 45%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .carousel-controls button {
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #options button {
+      margin: 0.5rem;
+      padding: 10px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #options button:hover {
+      background-color: #1976d2;
+    }
+
+    #jokeDisplay {
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      section {
+        margin: 1rem;
+        padding: 1rem;
+      }
+
+      .carousel-controls button {
+        padding: 6px;
+      }
+
+      #options button {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Advanced Styling & JavaScript</h1>
+    <p>Responsive Design | Interactive Quiz | API Data</p>
+  </header>
+
+  <section class="quiz-section">
+    <h2>Quiz: Test Your Web Knowledge</h2>
+    <div id="quiz">
+      <p id="question">Loading question...</p>
+      <div id="options"></div>
+    </div>
+  </section>
+
+  <section class="carousel-section">
+    <h2>Image Carousel</h2>
+    <div class="carousel">
+      <img id="carouselImage" src="https://splidejs.com/images/slides/image-slider/01.jpg" alt="carousel">
+      <div class="carousel-controls">
+        <button onclick="prevImage()">⟨</button>
+        <button onclick="nextImage()">⟩</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="api-section">
+    <h2>Random Joke (from API)</h2>
+    <button onclick="fetchJoke()">Get Joke</button>
+    <p id="jokeDisplay">Click the button to load a joke.</p>
+  </section>
+
+  <script>
+    // === Interactive Quiz ===
+    const quizData = [
+      {
+        question: "What does CSS stand for?",
+        options: ["Cascading Style Sheets", "Creative Style Syntax", "Computer Style Sheet"],
+        answer: "Cascading Style Sheets"
+      },
+      {
+        question: "Which language runs in a web browser?",
+        options: ["Python", "Java", "JavaScript"],
+        answer: "JavaScript"
+      }
+    ];
+
+    let currentQ = 0;
+
+    function loadQuiz() {
+      const q = quizData[currentQ];
+      document.getElementById("question").textContent = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => {
+          alert(opt === q.answer ? "✅ Correct!" : "❌ Wrong! Try next.");
+          currentQ = (currentQ + 1) % quizData.length;
+          loadQuiz();
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+    loadQuiz();
+
+    // === Image Carousel ===
+    const images = [
+      "https://splidejs.com/images/slides/crop/01.jpg",
+      "https://splidejs.com/images/slides/image-slider/02.jpg",
+      "https://splidejs.com/images/slides/image-slider/03.jpg"
+    ];
+    let currentImg = 0;
+
+    function showImage() {
+      document.getElementById("carouselImage").src = images[currentImg];
+    }
+
+    function prevImage() {
+      currentImg = (currentImg - 1 + images.length) % images.length;
+      showImage();
+    }
+
+    function nextImage() {
+      currentImg = (currentImg + 1) % images.length;
+      showImage();
+    }
+
+    // === API Fetch (Joke) ===
+    function fetchJoke() {
+      fetch("https://official-joke-api.appspot.com/random_joke")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("jokeDisplay").textContent = `${data.setup} — ${data.punchline}`;
+        })
+        .catch(err => {
+          document.getElementById("jokeDisplay").textContent = "❌ Failed to fetch joke.";
+        });
+    }
+  </script>
+</body>
+</html>
