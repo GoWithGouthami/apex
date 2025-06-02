@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Professional Web App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --text: #001219;
+      --accent: #0a9396;
+      --primary: #005f73;
+      --card: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --bg: #001219;
+      --text: #f0f4f8;
+      --accent: #94d2bd;
+      --primary: #0a9396;
+      --card: #00303d;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.3s ease-in-out;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--primary);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      color: white;
+      font-size: 1.3rem;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: var(--primary);
+      padding: 1rem;
+      gap: 10px;
+    }
+
+    .mobile-nav a {
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      color: white;
+    }
+
+    header h1 {
+      font-size: 3rem;
+    }
+
+    header p {
+      margin-top: 15px;
+      font-size: 1.3rem;
+    }
+
+    .btn {
+      margin-top: 25px;
+      padding: 12px 25px;
+      background-color: var(--card);
+      color: var(--primary);
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      max-width: 300px;
+      flex: 1 1 250px;
+      transition: transform 0.3s;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      filter: var(--img-filter);
+      transition: filter 0.3s ease-in-out;
+    }
+
+    [data-theme="dark"] .card img {
+      filter: brightness(0) invert(1);
+    }
+
+    header h1 {
+      font-size: 3rem;
+    }
+
+    header p {
+      margin-top: 15px;
+      font-size: 1.3rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .faq {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .faq-item {
+      background: var(--card);
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .faq-item:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .social-icons a {
+      color: white;
+      margin: 0 10px;
+      font-size: 1.3rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+    }
+
+    .scroll-up {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      padding: 10px;
+      display: none;
+      cursor: pointer;
+    }
+
+    .scroll-up.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      nav .menu {
+        display: none;
+      }
+
+      .mobile-nav.show {
+        display: flex;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      section {
+        padding: 40px 15px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <nav>
+    <div class="hamburger" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></div>
+    <div class="menu">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <i class="fas fa-moon theme-toggle" onclick="toggleTheme()" title="Toggle Theme"></i>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <header id="home">
+    <h1>Build Fast. Look Great. Perform Better.</h1>
+    <p>Fast • Responsive • Accessible • Optimized</p>
+    <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Me</button>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p style="max-width: 900px; margin: auto; text-align: center;">
+      I’m a passionate Web Developer with experience in building dynamic, responsive websites and applications using modern technologies. My mission is to create engaging, accessible, and performance-optimized web solutions that help businesses grow digitally.
+    </p>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="card-container">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML5" />
+        <h3>HTML5</h3>
+        <p>Semantic and accessible markup structure.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS3" />
+        <h3>CSS3</h3>
+        <p>Responsive layouts and animations.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript" />
+        <h3>JavaScript</h3>
+        <p>Interactive, dynamic web experiences.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React.js" />
+        <h3>React.js</h3>
+        <p>Component-based UI development.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968672.png" alt="Next.js" />
+        <h3>Next.js</h3>
+        <p>Server-side rendering and static sites.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python" />
+        <h3>Python</h3>
+        <p>Backend logic and automation.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="Flask" />
+        <h3>Flask</h3>
+        <p>Lightweight web framework for APIs.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Git & GitHub" />
+        <h3>Git & GitHub</h3>
+        <p>Version control and collaboration.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="Firebase" />
+        <h3>Firebase</h3>
+        <p>Realtime database & hosting.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="card-container">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888847.png" alt="Project 1" />
+        <h3>Personal Portfolio</h3>
+        <p>A responsive portfolio showcasing my skills and projects.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="Project 2" />
+        <h3>To-Do List App</h3>
+        <p>Task management app with local storage support.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888841.png" alt="Project 3" />
+        <h3>Job Portal</h3>
+        <p>Full-stack job search platform with filters.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888840.png" alt="Project 4" />
+        <h3>Car Finder</h3>
+        <p>Car listings with sorting, filtering & wishlist.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <strong>What technologies do you specialize in?</strong>
+      <p>HTML, CSS, JavaScript, React, Next.js, Python, Flask, Git, Firebase.</p>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <strong>Do you work with backend technologies?</strong>
+      <p>Yes, I use Python and Flask for backend development and APIs.</p>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <strong>Are your projects mobile-friendly?</strong>
+      <p>All my projects are responsive and optimized for all device sizes.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form onsubmit="submitForm(event)">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Your Name. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+    </div>
+  </footer>
+
+  <div class="scroll-up" id="scrollUp" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script>
+    function toggleMobileMenu() {
+      document.getElementById('mobileNav').classList.toggle('show');
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      if(body.getAttribute('data-theme') === 'dark') {
+        body.setAttribute('data-theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      const scrollUp = document.getElementById('scrollUp');
+      if(window.scrollY > 300) {
+        scrollUp.classList.add('show');
+      } else {
+        scrollUp.classList.remove('show');
+      }
+    });
+
+    function submitForm(e) {
+      e.preventDefault();
+      alert("Thank you for reaching out! I will get back to you soon.");
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
